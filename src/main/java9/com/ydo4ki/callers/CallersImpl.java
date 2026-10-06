@@ -24,9 +24,14 @@ final class CallersImpl {
             //     .orElse(null);
 			// but streams slow things down a bit
 			Iterator<StackWalker.StackFrame> sf = s.iterator();
-			for (int i = 0; i < index; i++)
-				sf.next();
+			for (int i = 0; i < index; i++) {
+                if (!sf.hasNext())
+                    return null;
+                sf.next();
+            }
 
+            if (!sf.hasNext())
+                return null;
 			return sf.next().getDeclaringClass();
 		});
     }

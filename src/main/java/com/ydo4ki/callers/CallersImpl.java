@@ -51,7 +51,7 @@ final class CallersImpl {
 
     /** @noinspection deprecation */
     private static Class getCallerSun(int index) {
-        return sun.reflect.Reflection.getCallerClass(index); // some illegal stuff here
+        return sun.reflect.Reflection.getCallerClass(index + 1); // some illegal stuff here
     }
 
     private static Class getCallerEx(int index) {

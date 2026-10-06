@@ -36,13 +36,13 @@ class MyVerySecretClass {
 <dependency>
     <groupId>com.ydo4ki</groupId>
     <artifactId>Callers</artifactId>
-    <version>1.1</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 ### Gradle
 
 ```groovy
-implementation("com.ydo4ki:Callers:1.1")
+implementation("com.ydo4ki:Callers:1.1.1")
 ```
 
 ### No build system

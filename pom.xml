@@ -6,7 +6,7 @@
 
     <groupId>com.ydo4ki</groupId>
     <artifactId>Callers</artifactId>
-    <version>1.1</version>
+    <version>1.1.1</version>
 
     <name>Callers</name>
     <description>Backport of getCallerClass method for Java 1.1 - 1.8</description>
