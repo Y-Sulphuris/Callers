@@ -8,6 +8,16 @@ import java.lang.reflect.Method;
  */
 final class CallersImpl {
     private static final boolean useReflection = findGet();
+    private static final boolean stePresent = useReflection || findIfStePresent();
+
+    private static boolean findIfStePresent() {
+        try {
+            Class ste = Class.forName("java.lang.StackTraceElement");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 
     private static boolean findGet() {
         try {
@@ -34,6 +44,7 @@ final class CallersImpl {
         if (useReflection) {
             return getCallerSun(index + 1);
         } else {
+            if (!stePresent) return getCallerLegacy(index + 2);
             return getCallerEx(index + 1);
         }
     }
@@ -58,5 +69,9 @@ final class CallersImpl {
         } catch (ClassNotFoundException e) {
             throw new AssertionError(e);
         }
+    }
+
+    private static Class getCallerLegacy(int index) {
+        return CallersLegacyImpl.getCallerClass(index);
     }
 }
