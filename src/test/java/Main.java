@@ -9,10 +9,11 @@ import java.lang.reflect.Method;
  */
 public class Main {
 	public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Method method = Cl2.class.getDeclaredMethod("call");
+		Method method = Cl2.class.getDeclaredMethod("call", new Class[0]);
 		method.setAccessible(true);
-		method.invoke(null);
+		method.invoke(null, new Object[0]);
 		Cl2.call();
+		System.out.println(System.getProperty("com.ydo4ki.callers.impl"));
 	}
 }
 
