@@ -7,19 +7,19 @@ import java.lang.reflect.Method;
  * @since 10.06.2026 09:09
  */
 final class CallersImpl {
-    private static final boolean useReflection = findGet();
+    private static final boolean useReflection = findIfReflectionPresent();
     private static final boolean stePresent = useReflection || findIfStePresent();
 
     private static boolean findIfStePresent() {
         try {
-            Class ste = Class.forName("java.lang.StackTraceElement");
+            Class.forName("java.lang.StackTraceElement");
             return true;
         } catch (ClassNotFoundException e) {
             return false;
         }
     }
 
-    private static boolean findGet() {
+    private static boolean findIfReflectionPresent() {
         try {
             Method m = Class.forName("sun.reflect.Reflection").getMethod("getCallerClass", new Class[]{int.class});
             //noinspection JavaReflectionInvocation
