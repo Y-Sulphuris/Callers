@@ -32,7 +32,7 @@ class MyVerySecretClass {
 
 For projects using Java 5 and newer it is also recommended that you use `@CallerSensitive` annotation from `com.ydo4ki.callers` for methods similar to the one in this example.
 
-This annotation might be useful to prevent obfuscation/optimization tools from altering your stack flow in thehttps://central.sonatype.com/artifact/com.ydo4ki/Callers parts of code that depend on it.
+This annotation might be useful to prevent obfuscation/optimization tools from altering your stack flow in the parts of code that depend on it.
 
 ## Installation
 
