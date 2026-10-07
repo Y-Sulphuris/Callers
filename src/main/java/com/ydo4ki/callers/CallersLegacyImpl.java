@@ -3,18 +3,15 @@ package com.ydo4ki.callers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 // a complex system of high durability
 // do not touch
 // do not look
+// this should never be loaded in java 4+
 final class CallersLegacyImpl {
-
-    static {
-        // this should never be loaded in java 4+
-        System.setProperty("com.ydo4ki.callers.impl", "ThrowableLegacy");
-    }
+    private CallersLegacyImpl()
+        { throw new IllegalStateException(); }
 
     static Class getCallerClass(int depth) {
         String s = extractClassName(getStackTraceElement(new Throwable(), depth));
@@ -36,11 +33,11 @@ final class CallersLegacyImpl {
     }
 
     private static String getStackTraceElement(Throwable t, int index) {
-        List str = getTruncatedStack(t, index);
+        Vector str = getTruncatedStack(t, index);
         return (String) str.get(str.size() - 1);
     }
 
-    private static List getTruncatedStack(Throwable t, int maxLines) {
+    private static Vector getTruncatedStack(Throwable t, int maxLines) {
         EarlyStopWriter esw = new EarlyStopWriter(maxLines + 1);
         try {
             t.printStackTrace(new PrintWriter(esw, true));
@@ -54,7 +51,7 @@ final class CallersLegacyImpl {
 // this is to prevent the entire stack being printed
 class EarlyStopWriter extends Writer {
     private int linesLeft;
-    List lines = new ArrayList();
+    Vector lines = new Vector();
     StringBuffer line = new StringBuffer();
 
     public EarlyStopWriter(int maxLines) {

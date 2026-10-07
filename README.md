@@ -1,5 +1,6 @@
 # Callers
 ![Java](https://img.shields.io/badge/Java-1.1%2B-ED8B00?logo=openjdk&logoColor=white)
+[![Maven Central](https://img.shields.io/maven-central/v/com.ydo4ki/Callers?label=Maven%20Central)](https://central.sonatype.com/artifact/com.ydo4ki/Callers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Backport of `StackWalker.getCallerClass()`/`sun.reflect.Reflection.getCallerClass()` to Java 1.1 - 1.8<br>
@@ -29,6 +30,10 @@ class MyVerySecretClass {
 }
 ```
 
+For projects using Java 5 and newer it is also recommended that you use `@CallerSensitive` annotation from `com.ydo4ki.callers` for methods similar to the one in this example.
+
+This annotation might be useful to prevent obfuscation/optimization tools from altering your stack flow in thehttps://central.sonatype.com/artifact/com.ydo4ki/Callers parts of code that depend on it.
+
 ## Installation
 
 ### Maven
@@ -36,13 +41,13 @@ class MyVerySecretClass {
 <dependency>
     <groupId>com.ydo4ki</groupId>
     <artifactId>Callers</artifactId>
-    <version>1.1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 ### Gradle
 
 ```groovy
-implementation("com.ydo4ki:Callers:1.1.1")
+implementation("com.ydo4ki:Callers:1.2")
 ```
 
 ### No build system
@@ -51,15 +56,16 @@ Go to releases tab and download latest jar
 ```
 
 ## How to build
-Please note that you are required to have JDK 1.4 on your computer to compile this.
+Please note that you are required to have JDKs 1.4, 1.8 and 9+ on your computer to compile this.
 1. Clone this repository
 ```bash
 git clone https://github.com/Y-Sulphuris/Callers.git
 cd Callers
 ```
-2. Create file "local.properties" in the source root and add the path to your JDK 1.4 to it:
+2. Create file "local.properties" in the repository root and add paths to your JDK 1.4 and 1.8 to it:
 ```properties
 jdk4.home=path/to/j2sdk1.4.0
+jdk8.home=path/to/jdk1.8.0
 ```
 3. Run maven build (maven should run on Java 9 or higher):
 ```bash

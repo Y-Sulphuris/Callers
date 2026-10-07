@@ -1,12 +1,15 @@
 package com.ydo4ki.callers;
 
-import java.lang.reflect.Method;
-
 /**
+ * Implementation of getCallerClass for Java 8 and older, where StackWalker isn't available,
+ * so we search for the fastest way to get the caller class on the current environment.
  * @author Sulphuris
- * @since 10.06.2026 09:09
+ * @since 1.0 (10.06.2026 09:09)
  */
 final class CallersImpl {
+    private CallersImpl()
+        { throw new IllegalStateException(); }
+
     private static final boolean useReflection = findIfReflectionPresent();
     private static final boolean stePresent = useReflection || findIfStePresent();
 
@@ -15,13 +18,14 @@ final class CallersImpl {
             Class.forName("java.lang.StackTraceElement");
             return true;
         } catch (ClassNotFoundException e) {
+            System.setProperty("com.ydo4ki.callers.impl", "ThrowableLegacy");
             return false;
         }
     }
 
     private static boolean findIfReflectionPresent() {
         try {
-            Method m = Class.forName("sun.reflect.Reflection").getMethod("getCallerClass", new Class[]{int.class});
+            java.lang.reflect.Method m = Class.forName("sun.reflect.Reflection").getMethod("getCallerClass", new Class[]{int.class});
             //noinspection JavaReflectionInvocation
             Object ret = m.invoke(null, new Integer[]{new Integer(2)});
             Class callerImplClass = Class.forName("com.ydo4ki.callers.CallersImpl"); // to avoid creation of synthetic field by java 4

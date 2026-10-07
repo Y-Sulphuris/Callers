@@ -3,10 +3,14 @@ package com.ydo4ki.callers;
 import java.util.Iterator;
 
 /**
+ * Implementation of getCallerClass for Java 9 and newer, where StackWalker is available.
  * @author Sulphuris
- * @since 10.06.2026 09:09
+ * @since 1.0 (10.06.2026 09:09)
  */
 final class CallersImpl {
+    private CallersImpl()
+        { throw new IllegalStateException(); }
+
     static {
         System.setProperty("com.ydo4ki.callers.impl", "StackWalker");
     }
