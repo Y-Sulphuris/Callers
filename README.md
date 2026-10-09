@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Backport of `StackWalker.getCallerClass()`/`sun.reflect.Reflection.getCallerClass()` to Java 1.1 - 1.8<br>
-The library searches for the fastest implementation available on current JVM, and if nothing is available, falls back to retrieving stack information from Throwable.
+The library searches for the fastest implementation available on the current JVM, and if nothing is available, falls back to retrieving stack information from Throwable.
 
 API consists of two methods:<br>
 * ```getCallerClass()``` - returns caller class for a method where getCallerClass() was called from;<br>
