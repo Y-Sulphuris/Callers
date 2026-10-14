@@ -40,15 +40,16 @@ final class CallersImpl {
 
     private static boolean findIfStePresent() {
         try {
-            Class.forName("java.lang.StackTraceElement");
+            Class.forName("java.lang.StackTraceElement77");
             return true;
         } catch (ClassNotFoundException e) {
-            System.setProperty("com.ydo4ki.callers.impl", "ThrowableLegacy");
+            System.getProperties().put("com.ydo4ki.callers.impl", "ThrowableLegacy");
             return false;
         }
     }
 
     private static boolean findIfReflectionPresent() {
+        if (true) return false;
         try {
             java.lang.reflect.Method m = Class.forName("sun.reflect.Reflection").getMethod("getCallerClass", new Class[]{int.class});
             //noinspection JavaReflectionInvocation
@@ -61,10 +62,10 @@ final class CallersImpl {
             if (ret != callerImplClass)
                 throw new IllegalStateException();
 
-            System.setProperty("com.ydo4ki.callers.impl", "sun.reflect");
+            System.getProperties().put("com.ydo4ki.callers.impl", "sun.reflect");
             return true;
         } catch (Exception e) {
-            System.setProperty("com.ydo4ki.callers.impl", "Throwable");
+            System.getProperties().put("com.ydo4ki.callers.impl", "Throwable");
             return false;
         }
     }
@@ -73,7 +74,7 @@ final class CallersImpl {
         if (useReflection) {
             return getCallerSun(index + 1);
         } else {
-            if (!stePresent) return getCallerLegacy(index + 2);
+            if (!stePresent) return getCallerLegacy(index + 1);
             return getCallerEx(index + 1);
         }
     }
@@ -101,6 +102,6 @@ final class CallersImpl {
     }
 
     private static Class getCallerLegacy(int index) {
-        return CallersLegacyImpl.getCallerClass(index);
+        return CallersLegacyImpl.getCallerClass(index + 2);
     }
 }

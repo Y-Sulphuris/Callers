@@ -39,6 +39,9 @@ final class CallersLegacyImpl {
 
     static Class getCallerClass(int depth) {
         String s = extractClassName(getStackTraceElement(new Throwable(), depth));
+        if (s == null)
+            return null;
+
         Class cls;
         try {
             cls = Class.forName(s);
@@ -49,7 +52,9 @@ final class CallersLegacyImpl {
     }
 
     private static String extractClassName(String stackTraceElement) {
-        String s = stackTraceElement.substring(4);
+        if (stackTraceElement == null)
+            return null;
+        String s = stackTraceElement.substring(2); // remove 'at'
         int i = s.indexOf("(");
         s = s.substring(0, i);
         i = s.lastIndexOf(".");
@@ -58,7 +63,13 @@ final class CallersLegacyImpl {
 
     private static String getStackTraceElement(Throwable t, int index) {
         Vector str = getTruncatedStack(t, index);
-        return (String) str.get(str.size() - 1);
+
+//        System.out.println("Requested depth: " + index);
+//        System.out.println("Result vector (" + str.size() + "): " + str);
+
+        if (str.size() == 0 || index > str.size())
+            return null;
+        return (String) str.elementAt(index - 1);
     }
 
     private static Vector getTruncatedStack(Throwable t, int maxLines) {
@@ -67,7 +78,7 @@ final class CallersLegacyImpl {
             t.printStackTrace(new PrintWriter(esw, true));
         } catch (StopException e) {
         }
-        esw.lines.remove(0);
+        esw.lines.removeElementAt(0);
         return esw.lines;
     }
 }
@@ -87,17 +98,20 @@ class EarlyStopWriter extends Writer {
             char c = cbuf[off + i];
             if (c == '\n') {
                 String str = line.toString();
-                if (str.startsWith("\tat jdk.") || str.startsWith("\tat sun.reflect.") || str.startsWith("\tat java.")) {
+                line.setLength(0);
+                if (str.startsWith("atjdk.") || str.startsWith("atsun.reflect.") || str.startsWith("atjava.")) {
                     // skip internal lines
                 } else {
-                    lines.add(str);
-                    line.setLength(0);
+                    lines.addElement(str);
                     if (--linesLeft <= 0) {
                         throw new StopException();
                     }
                 }
             } else {
-                line.append(c);
+                if (!Character.isWhitespace(c)
+                        && !Character.isISOControl(c)) {
+                    line.append(c);
+                }
             }
         }
     }

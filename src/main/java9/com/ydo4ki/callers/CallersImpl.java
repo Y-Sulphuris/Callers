@@ -37,7 +37,7 @@ final class CallersImpl {
         { throw new IllegalStateException(); }
 
     static {
-        System.setProperty("com.ydo4ki.callers.impl", "StackWalker");
+        System.getProperties().put("com.ydo4ki.callers.impl", "StackWalker");
     }
 
     private static final StackWalker WALKER =
