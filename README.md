@@ -41,13 +41,13 @@ This annotation might be useful to prevent obfuscation/optimization tools from a
 <dependency>
     <groupId>com.ydo4ki</groupId>
     <artifactId>Callers</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 </dependency>
 ```
 ### Gradle
 
 ```groovy
-implementation("com.ydo4ki:Callers:1.2")
+implementation("com.ydo4ki:Callers:1.3")
 ```
 
 ### No build system
