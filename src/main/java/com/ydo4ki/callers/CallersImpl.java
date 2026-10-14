@@ -40,7 +40,7 @@ final class CallersImpl {
 
     private static boolean findIfStePresent() {
         try {
-            Class.forName("java.lang.StackTraceElement77");
+            Class.forName("java.lang.StackTraceElement");
             return true;
         } catch (ClassNotFoundException e) {
             System.getProperties().put("com.ydo4ki.callers.impl", "ThrowableLegacy");
@@ -49,7 +49,6 @@ final class CallersImpl {
     }
 
     private static boolean findIfReflectionPresent() {
-        if (true) return false;
         try {
             java.lang.reflect.Method m = Class.forName("sun.reflect.Reflection").getMethod("getCallerClass", new Class[]{int.class});
             //noinspection JavaReflectionInvocation
