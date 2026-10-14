@@ -24,7 +24,7 @@
 
 /**
  * Defined module for Callers library.
- * @since 1.2.1
+ * @since 1.3
  */
 module com.ydo4ki.callers {
     exports com.ydo4ki.callers;
